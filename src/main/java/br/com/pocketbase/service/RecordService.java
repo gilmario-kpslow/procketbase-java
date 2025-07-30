@@ -1,0 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package br.com.pocketbase.service;
+
+/**
+ *
+ * @author gilmario
+ */
+public class RecordService extends BaseCrudService<RecordModel> {
+
+    @Override
+    public String getBaseUrl() {
+        return "";
+    }
+
+}
