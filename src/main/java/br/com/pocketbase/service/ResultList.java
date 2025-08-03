@@ -10,6 +10,7 @@ import java.util.List;
 /**
  *
  * @author gilmario
+ * @param <M>
  */
 public class ResultList<M> {
 
@@ -17,8 +18,10 @@ public class ResultList<M> {
     private Integer perPage;
     private Integer totalItems;
     private Integer totalPages;
-
     private List<M> items;
+
+    public ResultList() {
+    }
 
     public ResultList(Integer page, Integer perPage, Integer totalItems, Integer totalPages) {
         this.page = page;

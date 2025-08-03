@@ -1,4 +1,4 @@
-package br.com.pocketbase.service;
+package br.com.pocketbase.http;
 
 import java.util.Map;
 
@@ -70,6 +70,11 @@ public class ParametrosRequest {
 
     public boolean isSkipTotal() {
         return skipTotal;
+    }
+
+    @Override
+    public String toString() {
+        return "ParametrosRequest{" + "batch=" + batch + ", page=" + page + ", perPage=" + perPage + ", skipTotal=" + skipTotal + ", expand=" + expand + ", filter=" + filter + ", sort=" + sort + ", fields=" + fields + ", query=" + query + ", headers=" + headers + '}';
     }
 
 }

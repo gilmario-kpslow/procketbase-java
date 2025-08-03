@@ -4,11 +4,19 @@
  */
 package br.com.pocketbase.service;
 
+import br.com.pocketbase.colecao.Registro;
+import br.com.pocketbase.generic.BaseCrudService;
+import br.com.pocketbase.http.PocketbaseClient;
+
 /**
  *
  * @author gilmario
  */
-public class RecordService extends BaseCrudService<RecordModel> {
+public class RecordService extends BaseCrudService<Registro> {
+
+    public RecordService(PocketbaseClient client) {
+        super(client);
+    }
 
     @Override
     public String getBaseUrl() {

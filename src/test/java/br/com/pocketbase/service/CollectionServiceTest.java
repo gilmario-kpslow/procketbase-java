@@ -4,6 +4,7 @@
  */
 package br.com.pocketbase.service;
 
+import br.com.pocketbase.colecao.ColecaoService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,9 +15,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author gilmario
  */
-public class RecordServiceTest {
+public class CollectionServiceTest {
 
-    public RecordServiceTest() {
+    private ColecaoService collectionService;
+
+    public CollectionServiceTest() {
     }
 
     @BeforeAll
@@ -35,18 +38,15 @@ public class RecordServiceTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getBaseUrl method, of class RecordService.
-     */
     @Test
-    public void testGetBaseUrl() {
-//        System.out.println("getBaseUrl");
-//        RecordService instance = new RecordService();
-//        String expResult = "";
-//        String result = instance.getBaseUrl();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+    public void testSomeMethod() {
+
+//        collectionService.getList();
+    }
+
+    @Test
+    public void testeList() {
+
     }
 
 }

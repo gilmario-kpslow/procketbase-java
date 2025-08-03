@@ -1,12 +1,12 @@
 package br.com.pocketbase.http;
 
-import br.com.pocketbase.service.ParametrosRequest;
+import br.com.pocketbase.util.PocketbaseUtil;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -16,85 +16,61 @@ import java.util.Optional;
 public class PocketbaseClient {
 
     private String token;
-    private HttpClient client;
+    private final PocketbaseConfiguracao configuracao;
+    private final HttpClient client;
 
-    public PocketbaseClient() {
-//        this.client;
+    public PocketbaseClient(PocketbaseConfiguracao configuracao) {
+        this.configuracao = configuracao;
+        this.client = HttpClient.newHttpClient();
+
     }
 
-    public HttpResponse<String> GET(String url, ParametrosRequest parametos) throws IOException, InterruptedException {
+    public PocketbaseClient(PocketbaseConfiguracao configuracao, HttpClient client) {
+        this.configuracao = configuracao;
+        this.client = client;
+    }
 
-        HttpRequest req = request(url, Optional.ofNullable(parametos.getHeaders()), Optional.ofNullable(parametos.getQuery()))
+    public HttpResponse<String> GET(String url, ParametrosRequest parametros) throws IOException, InterruptedException {
+        HttpRequest req = request(url, parametros)
                 .GET()
                 .build();
-
         return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
-    public HttpResponse<String> POST(String url, Map<String, String> header, Map<String, String> query, String body) throws IOException, InterruptedException {
+    public HttpResponse<String> GET(String url) throws IOException, InterruptedException {
+        return this.GET(url, null);
+    }
 
-        HttpRequest req = request(url, Optional.ofNullable(header), Optional.ofNullable(query))
+    public HttpResponse<String> POST(String url, ParametrosRequest parametos, String body) throws IOException, InterruptedException {
+        HttpRequest req = request(url, parametos)
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
-
         return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
-    private HttpRequest.Builder request(String url, Optional<Map<String, String>> header, Optional<Map<String, String>> query) {
+    public HttpResponse<String> POST(String url, String body) throws IOException, InterruptedException {
+        return POST(url, null, body);
+    }
 
+    private HttpRequest.Builder request(String url, ParametrosRequest parametros) {
         HttpRequest.Builder builder = HttpRequest.newBuilder();
-        builder.uri(URI.create(url.concat(buildQuery(query))));
-
-        header.ifPresent((m) -> {
-            m.forEach((c, v) -> {
-                builder.header(c, v);
+        builder.uri(URI.create(PocketbaseUtil.getURL(configuracao.getServerURL(), url, PocketbaseUtil.buildQuery(parametros))));
+        if (Objects.nonNull(parametros)) {
+            Optional.ofNullable(parametros.getHeaders()).ifPresent((m) -> {
+                m.forEach((c, v) -> {
+                    builder.header(c, v);
+                });
             });
-        });
-
+        }
         return builder;
     }
 
-    private String buildQuery(Optional<Map<String, String>> query) {
-        StringBuilder builder = new StringBuilder();
-        query.ifPresent((m) -> {
-            builder.append("?");
-            m.forEach((c, v) -> {
-                builder.append(c).append("=").append(v).append("&");
-            });
-        });
-
-        return builder.toString();
+    private HttpRequest.Builder request(String url) {
+        return this.request(url, null);
     }
 
-//    private Object send(String metodo, String url, Map<String, String> header, Map<String, String> query, String body) {
-//        HttpRequest request = HttpRequest
-//                .newBuilder()
-//                .header("Content-Type", APPLICATION_JSON)
-//                .header("Accept", APPLICATION_JSON)
-//                .uri(getURL("", "", ""))
-//                .header("Authorization", getToken())
-//                .POST(HttpRequest.BodyPublishers.ofString(JsonConverter.toJson(t)))
-//                .build();
-//
-//        return request;
-//
-//    }
     public String getToken() {
         return token;
     }
 
-//    private void login() {
-//        HttpRequest request = HttpRequest
-//                .newBuilder()
-//                .header("Content-Type", APPLICATION_JSON)
-//                .header("Accept", APPLICATION_JSON)
-//                .uri(getURL("", "", ""))
-//                .POST(HttpRequest.BodyPublishers.ofString(JsonConverter.toJson(t)))
-//                .build();
-//    }
-//
-//    private URI getURL(String paths, String base, String entity) {
-//
-//        return URI.create(new StringBuilder(baseUrl).append(base).append(entity).append(paths).toString());
-//    }
 }

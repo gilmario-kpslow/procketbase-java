@@ -1,7 +1,9 @@
-package br.com.pocketbase.service;
+package br.com.pocketbase.generic;
 
-import br.com.pocketbase.generic.BaseService;
 import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.http.ParametrosRequest;
+import br.com.pocketbase.http.ParametrosRequestBuilder;
+import br.com.pocketbase.service.ResultList;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 /**
  *
  * @author gilmario
+ * @param <T>
  */
 public abstract class BaseCrudService<T> extends BaseService {
 
@@ -31,8 +34,7 @@ public abstract class BaseCrudService<T> extends BaseService {
 
     }
 
-    ResultList<T> getList(
-            ParametrosRequest paramsRequest) throws IOException, InterruptedException {
+    ResultList<T> getList(ParametrosRequest paramsRequest) throws IOException, InterruptedException {
 
         HttpResponse response = getClient().GET(getBaseUrl(), paramsRequest);
 
