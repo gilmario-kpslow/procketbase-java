@@ -1,11 +1,12 @@
 package br.com.pocketbase.generic;
 
-import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.dto.PocketbasePage;
 import br.com.pocketbase.http.ParametrosRequest;
 import br.com.pocketbase.http.ParametrosRequestBuilder;
-import br.com.pocketbase.service.ResultList;
+import br.com.pocketbase.http.PocketbaseCliente;
+import br.com.pocketbase.registro.Registro;
+import br.com.pocketbase.seguranca.PocketbaseArmazenamentoCredencial;
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +15,21 @@ import java.util.List;
  * @author gilmario
  * @param <T>
  */
-public abstract class BaseCrudService<T> extends BaseService {
+public abstract class BaseCrudService<T extends Registro> extends BaseService {
 
-    public BaseCrudService(PocketbaseClient client) {
-        super(client);
+    public BaseCrudService(PocketbaseCliente client, PocketbaseArmazenamentoCredencial segurancaService) {
+        super(client, segurancaService);
     }
 
     public abstract String getBaseUrl();
 
-    public List<T> getFullList() throws IOException, InterruptedException {
+    public abstract Class getClassRegistro();
+
+    public List<T> getFullList() throws IOException, InterruptedException, Exception {
 
         List<T> result = new ArrayList<>();
 
-        ResultList<T> resp = getList(new ParametrosRequestBuilder().build());
+        PocketbasePage<T> resp = getList(new ParametrosRequestBuilder().build());
 
         result.addAll(resp.getItems());
 
@@ -34,10 +37,13 @@ public abstract class BaseCrudService<T> extends BaseService {
 
     }
 
-    ResultList<T> getList(ParametrosRequest paramsRequest) throws IOException, InterruptedException {
+    PocketbasePage<T> getList(ParametrosRequest paramsRequest) throws Exception {
+        return getCliente().autenticar(credenciais.getCredencias().getToken()).getJson(getBaseUrl(), paramsRequest, PocketbasePage.class, getClassRegistro());
+    }
 
-        HttpResponse response = getClient().GET(getBaseUrl(), paramsRequest);
-
+    public T criar(T t) {
+//        return
         return null;
     }
+
 }

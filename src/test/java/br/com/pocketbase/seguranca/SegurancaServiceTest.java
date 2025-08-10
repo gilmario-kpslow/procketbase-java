@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package br.com.pocketbase.seguranca;
 
-import br.com.pocketbase.http.ParametrosRequest;
-import br.com.pocketbase.http.ParametrosRequestBuilder;
-import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.http.PocketbaseCliente;
 import br.com.pocketbase.http.PocketbaseConfiguracao;
+import java.util.Objects;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,23 +23,23 @@ public class SegurancaServiceTest {
     @Test
     public void testLogin() throws Exception {
         System.out.println("login");
-        LoginRequest request = new LoginRequest();
-        request.setIdentity("api@teste.com");
-        request.setPassword("api#teste.com");
+//        LoginRequest request = new LoginRequest();
+//        request.setIdentity("api@teste.com");
+//        request.setPassword("api#teste.com");
 
         String url = "http://localhost:8090";
-        ParametrosRequest parametos = new ParametrosRequestBuilder()
-                .build();
 
         PocketbaseConfiguracao conf = new PocketbaseConfiguracao();
         conf.setServerURL(url);
+        conf.setUsuario("api@teste.com");
+        conf.setSenha("api#teste.com");
 
-        PocketbaseClient client = new PocketbaseClient(conf);
+        PocketbaseCliente client = new PocketbaseCliente(conf);
 
-        SegurancaService instance = new SegurancaService(client);
-        LoginResponse expResult = null;
-        LoginResponse result = instance.login(request);
-        Assertions.assertEquals(expResult, result);
+        PocketbaseArmazenamentoCredencial instance = new PocketbaseArmazenamentoCredencial(client, conf);
+        instance.autenticar();
+        LoginResponse result = instance.getCredencias();
+        Assertions.assertTrue(Objects.nonNull(result.getToken()));
     }
 
 }

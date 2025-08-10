@@ -1,6 +1,7 @@
 package br.com.pocketbase.generic;
 
-import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.http.PocketbaseCliente;
+import br.com.pocketbase.seguranca.PocketbaseArmazenamentoCredencial;
 
 /**
  *
@@ -8,14 +9,16 @@ import br.com.pocketbase.http.PocketbaseClient;
  */
 public abstract class BaseService {
 
-    protected final PocketbaseClient client;
+    protected final PocketbaseCliente cliente;
+    protected final PocketbaseArmazenamentoCredencial credenciais;
 
-    public BaseService(PocketbaseClient client) {
-        this.client = client;
+    public BaseService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais) {
+        this.cliente = cliente;
+        this.credenciais = credenciais;
     }
 
-    public PocketbaseClient getClient() {
-        return client;
+    public PocketbaseCliente getCliente() {
+        return cliente;
     }
 
 }

@@ -47,7 +47,7 @@ public class PocketbaseClientTest {
         PocketbaseConfiguracao conf = new PocketbaseConfiguracao();
         conf.setServerURL(url);
 
-        PocketbaseClient instance = new PocketbaseClient(conf);
+        PocketbaseCliente instance = new PocketbaseCliente(conf);
         HttpResponse<String> result = instance.GET("/", parametos);
         String express = "expand=&fields=&batch=500&filter=&page=0&perPage=10&skipTotal=false&sort=";
         Assertions.assertEquals(express, result.body());
@@ -65,7 +65,7 @@ public class PocketbaseClientTest {
         PocketbaseConfiguracao conf = new PocketbaseConfiguracao();
         conf.setServerURL(url);
 
-        PocketbaseClient instance = new PocketbaseClient(conf);
+        PocketbaseCliente instance = new PocketbaseCliente(conf);
         HttpResponse<String> result = instance.POST("", parametos, "expectedvalue");
         Assertions.assertEquals(200, result.statusCode());
         Assertions.assertEquals(expected, result.body());

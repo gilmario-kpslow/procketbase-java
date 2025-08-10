@@ -1,6 +1,6 @@
 package br.com.pocketbase.health;
 
-import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.http.PocketbaseCliente;
 import br.com.pocketbase.http.PocketbaseConfiguracao;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -46,7 +46,7 @@ public class SaudeServiceTest {
         PocketbaseConfiguracao conf = new PocketbaseConfiguracao();
         conf.setServerURL(url);
 
-        PocketbaseClient client = new PocketbaseClient(conf);
+        PocketbaseCliente client = new PocketbaseCliente(conf);
 
         SaudeService instance = new SaudeService(client);
         boolean expResult = true;

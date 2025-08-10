@@ -1,4 +1,4 @@
-package br.com.pocketbase.colecao;
+package br.com.pocketbase.registro;
 
 /**
  *

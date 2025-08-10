@@ -1,9 +1,12 @@
 package br.com.pocketbase.colecao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  *
  * @author gilmario
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Campo {
 
     private String autogeneratePattern;

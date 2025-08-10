@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.pocketbase.seguranca;
 
 import br.com.pocketbase.generic.RecordModel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 /**
@@ -13,9 +10,11 @@ import java.time.LocalDateTime;
  */
 public class RecordAutenticado extends RecordModel {
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.nnn'Z'")
     private LocalDateTime created;
     private String email;
     private boolean emailVisibility;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.nnn'Z'")
     private LocalDateTime updated;
     private boolean verified;
 

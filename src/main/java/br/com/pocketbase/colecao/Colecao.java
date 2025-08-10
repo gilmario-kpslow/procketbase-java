@@ -1,11 +1,13 @@
 package br.com.pocketbase.colecao;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
  *
  * @author gilmario
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Colecao {
 
     private String id;

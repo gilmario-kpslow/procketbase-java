@@ -1,46 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.pocketbase.colecao;
 
-import br.com.pocketbase.JsonConverter;
-import br.com.pocketbase.colecao.Colecao;
-import br.com.pocketbase.generic.BaseCrudService;
-import br.com.pocketbase.http.PocketbaseClient;
+import br.com.pocketbase.dto.PocketbasePage;
+import br.com.pocketbase.generic.BaseService;
 import br.com.pocketbase.http.ParametrosRequest;
 import br.com.pocketbase.http.ParametrosRequestBuilder;
-import br.com.pocketbase.service.ResultList;
-import java.io.IOException;
+import br.com.pocketbase.http.PocketbaseCliente;
+import br.com.pocketbase.seguranca.PocketbaseArmazenamentoCredencial;
 
 /**
  *
  * @author gilmario
  */
-public class ColecaoService extends BaseCrudService<Colecao> {
+public class ColecaoService extends BaseService {
 
-    private String baseCrudPath = "/api/collections";
+    private static final String BASE_URL = "/api/collections";
 
-    public ColecaoService(PocketbaseClient client) {
-        super(client);
+    public ColecaoService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais) {
+        super(cliente, credenciais);
     }
 
-    public ResultList<Colecao> getList(ParametrosRequest paramsRequest) throws IOException, InterruptedException {
-
-        String obj = client.GET(baseCrudPath, paramsRequest).body();
-
-        return JsonConverter.fromJson(obj, ResultList.class);
-    }
-
-    @Override
-    public String getBaseUrl() {
-        return baseCrudPath;
+    public PocketbasePage<Colecao> getLista(ParametrosRequest paramsRequest) throws Exception {
+        return cliente.autenticar(credenciais.getCredencias().getToken()).getJson(BASE_URL, paramsRequest, PocketbasePage.class, Colecao.class);
     }
 
     public boolean existe(String colecao) throws Exception {
-        String resp = client.GET(colecao, new ParametrosRequestBuilder()
-                .build())
-                .body();
-        return false;
+        PocketbasePage<Colecao> resp = getLista(new ParametrosRequestBuilder().build());
+        return resp.getItems()
+                .stream()
+                .filter(c -> c.getName().equals(colecao))
+                .findFirst()
+                .isPresent();
     }
 }

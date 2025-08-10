@@ -61,6 +61,10 @@ public class PocketbaseUtil {
                 }
                 continue;
             }
+            if (i.charAt(0) == '?') {
+                builder.append(i);
+                continue;
+            }
             if (i.charAt(0) != '/') {
                 builder.append("/");
             }

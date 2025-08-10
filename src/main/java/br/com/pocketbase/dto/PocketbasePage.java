@@ -1,34 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package br.com.pocketbase.service;
+package br.com.pocketbase.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author gilmario
- * @param <M>
+ * @param <T>
  */
-public class ResultList<M> {
+public class PocketbasePage<T> {
 
     private Integer page;
     private Integer perPage;
     private Integer totalItems;
     private Integer totalPages;
-    private List<M> items;
+    private List<T> items;
 
-    public ResultList() {
-    }
-
-    public ResultList(Integer page, Integer perPage, Integer totalItems, Integer totalPages) {
-        this.page = page;
-        this.perPage = perPage;
-        this.totalItems = totalItems;
-        this.totalPages = totalPages;
-        items = new ArrayList<>();
+    public PocketbasePage() {
     }
 
     public Integer getPage() {
@@ -63,11 +50,11 @@ public class ResultList<M> {
         this.totalPages = totalPages;
     }
 
-    public List<M> getItems() {
+    public List<T> getItems() {
         return items;
     }
 
-    public void setItems(List<M> items) {
+    public void setItems(List<T> items) {
         this.items = items;
     }
 
