@@ -26,8 +26,8 @@ public class PocketbaseArmazenamentoCredencialTest {
         String url = "http://localhost:8090";
         PocketbaseConfiguracao configuracao = new PocketbaseConfiguracao();
         configuracao.setServerURL(url);
-        configuracao.setUsuario("api@teste.com");
-        configuracao.setSenha("api#teste.com");
+        configuracao.setUsuario("chatintegracao@email.com");
+        configuracao.setSenha("chatintegracao@email.com");
 
         PocketbaseCliente cliente = new PocketbaseCliente(configuracao);
 
@@ -48,9 +48,9 @@ public class PocketbaseArmazenamentoCredencialTest {
         PocketbaseCliente cliente = new PocketbaseCliente(configuracao);
 
         PocketbaseArmazenamentoCredencial instance = new PocketbaseArmazenamentoCredencial(cliente, configuracao);
-        instance.autenticar();
+        instance.autenticarSuper();
         boolean expResult = true;
-        boolean result = instance.isAutenticado();
+        boolean result = instance.isAutenticadoSuper();
         Assertions.assertEquals(expResult, result);
     }
 
@@ -66,8 +66,8 @@ public class PocketbaseArmazenamentoCredencialTest {
         PocketbaseCliente cliente = new PocketbaseCliente(configuracao);
 
         PocketbaseArmazenamentoCredencial instance = new PocketbaseArmazenamentoCredencial(cliente, configuracao);
-        instance.autenticar();
-        boolean result = instance.tokenIsValido();
+        instance.autenticarSuper();
+        boolean result = instance.tokenIsValidoSuper();
         Assertions.assertTrue(result);
 //        fail("The test case is a prototype.");
     }

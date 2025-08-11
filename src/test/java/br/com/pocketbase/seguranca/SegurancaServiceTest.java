@@ -37,8 +37,8 @@ public class SegurancaServiceTest {
         PocketbaseCliente client = new PocketbaseCliente(conf);
 
         PocketbaseArmazenamentoCredencial instance = new PocketbaseArmazenamentoCredencial(client, conf);
-        instance.autenticar();
-        LoginResponse result = instance.getCredencias();
+        instance.autenticarSuper();
+        LoginResponse result = instance.getCredenciasSuper();
         Assertions.assertTrue(Objects.nonNull(result.getToken()));
     }
 

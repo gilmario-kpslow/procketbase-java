@@ -2,12 +2,14 @@ package br.com.pocketbase.seguranca;
 
 import br.com.pocketbase.generic.RecordModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author gilmario
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecordAutenticado extends RecordModel {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.nnn'Z'")

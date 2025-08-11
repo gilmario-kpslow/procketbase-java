@@ -4,7 +4,6 @@
  */
 package br.com.pocketbase.colecao;
 
-import br.com.pocketbase.colecao.ColecaoService;
 import br.com.pocketbase.http.PocketbaseCliente;
 import br.com.pocketbase.http.PocketbaseConfiguracao;
 import br.com.pocketbase.seguranca.PocketbaseArmazenamentoCredencial;
@@ -55,7 +54,7 @@ public class CollectionServiceTest {
 
         PocketbaseArmazenamentoCredencial credenciais = new PocketbaseArmazenamentoCredencial(client, conf);
 
-        ColecaoService instance = new ColecaoService(client, credenciais);
+        ColecaoService instance = new ColecaoService(client, credenciais, "");
         boolean result = instance.existe("_superusers");
         Assertions.assertTrue(result);
         // TODO review the generated test code and remove the default call to fail.

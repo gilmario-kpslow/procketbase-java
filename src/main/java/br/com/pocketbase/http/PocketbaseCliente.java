@@ -64,6 +64,13 @@ public class PocketbaseCliente {
         return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
+    public HttpResponse<String> PATCH(String url, ParametrosRequest parametos, String body) throws IOException, InterruptedException {
+        HttpRequest req = request(url, parametos)
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                .build();
+        return client.send(req, HttpResponse.BodyHandlers.ofString());
+    }
+
     public <R> R postJson(String url, ParametrosRequest parametros, String body, Class<R> container, Class... classe) throws IOException, InterruptedException {
         parametros.getHeaders().put("Content-Type", "application/json");
         parametros.getHeaders().put("Accept", "application/json");
@@ -84,13 +91,38 @@ public class PocketbaseCliente {
         return this.postJson(url, parametros, body, container, classe);
     }
 
+    public <R> R patchJson(String url, String body, Class<R> container, Class... classe) throws IOException, InterruptedException {
+        ParametrosRequest parametros = new ParametrosRequestBuilder().build();
+        parametros.getHeaders().put("Content-Type", "application/json");
+        parametros.getHeaders().put("Accept", "application/json");
+        return this.patchJson(url, parametros, body, container, classe);
+    }
+
+    public <R> R patchJson(String url, ParametrosRequest parametros, String body, Class<R> container, Class... classe) throws IOException, InterruptedException {
+        parametros.getHeaders().put("Content-Type", "application/json");
+        parametros.getHeaders().put("Accept", "application/json");
+
+        HttpResponse<String> resp = this.PATCH(url, parametros, body);
+
+        if (resp.statusCode() > 204 || resp.statusCode() < 200) {
+            throw new RuntimeException("Erro na requisição: " + resp.statusCode() + " resp: " + resp.body());
+        }
+
+        return JsonConverter.fromJson(resp.body(), container, classe);
+    }
+
     public HttpResponse<String> POST(String url, String body) throws IOException, InterruptedException {
         return POST(url, null, body);
     }
 
+    public HttpResponse<String> PATCH(String url, String body) throws IOException, InterruptedException {
+        return PATCH(url, null, body);
+    }
+
     private HttpRequest.Builder request(String url, ParametrosRequest parametros) {
         HttpRequest.Builder builder = HttpRequest.newBuilder();
-        builder.uri(URI.create(PocketbaseUtil.getURL(configuracao.getServerURL(), url, PocketbaseUtil.buildQuery(parametros))));
+        String urlEncondada = PocketbaseUtil.getURL(configuracao.getServerURL(), url, PocketbaseUtil.buildQuery(parametros));
+        builder.uri(URI.create(urlEncondada));
         if (Objects.nonNull(parametros)) {
             Optional.ofNullable(parametros.getHeaders()).ifPresent((m) -> {
                 m.forEach((c, v) -> {
@@ -109,6 +141,13 @@ public class PocketbaseCliente {
     public PocketbaseCliente autenticar(String token) {
         this.token = token;
         return this;
+    }
+
+    public HttpResponse<String> deletar(String url) throws IOException, InterruptedException {
+        HttpRequest req = request(url, null)
+                .DELETE()
+                .build();
+        return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
 }

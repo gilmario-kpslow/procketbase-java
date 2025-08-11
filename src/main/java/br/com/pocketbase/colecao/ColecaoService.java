@@ -15,12 +15,12 @@ public class ColecaoService extends BaseService {
 
     private static final String BASE_URL = "/api/collections";
 
-    public ColecaoService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais) {
-        super(cliente, credenciais);
+    public ColecaoService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais, String colecao) {
+        super(cliente, credenciais, colecao);
     }
 
     public PocketbasePage<Colecao> getLista(ParametrosRequest paramsRequest) throws Exception {
-        return cliente.autenticar(credenciais.getCredencias().getToken()).getJson(BASE_URL, paramsRequest, PocketbasePage.class, Colecao.class);
+        return cliente.autenticar(credenciais.getCredenciasSuper().getToken()).getJson(BASE_URL, paramsRequest, PocketbasePage.class, Colecao.class);
     }
 
     public boolean existe(String colecao) throws Exception {

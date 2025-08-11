@@ -11,10 +11,12 @@ public abstract class BaseService {
 
     protected final PocketbaseCliente cliente;
     protected final PocketbaseArmazenamentoCredencial credenciais;
+    protected final String nomeColecao;
 
-    public BaseService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais) {
+    public BaseService(PocketbaseCliente cliente, PocketbaseArmazenamentoCredencial credenciais, String colecao) {
         this.cliente = cliente;
         this.credenciais = credenciais;
+        this.nomeColecao = colecao;
     }
 
     public PocketbaseCliente getCliente() {

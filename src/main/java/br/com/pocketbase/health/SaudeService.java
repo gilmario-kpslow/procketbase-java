@@ -13,7 +13,7 @@ public class SaudeService extends BaseService {
     private static final String BASE_URL = "/api/health";
 
     public SaudeService(PocketbaseCliente client) {
-        super(client, null);
+        super(client, null, null);
     }
 
     public boolean verificarSaude() throws Exception {
